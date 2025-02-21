@@ -29,7 +29,7 @@ public class CategoriesController : ControllerBase
     public IActionResult GetCategory(int id)
     {
         var category = context.Categories.Find(id);
-        ResultCategoryDto categoryDto = mapper.Map<ResultCategoryDto>(category);
+        GetByIdCategoryDto categoryDto = mapper.Map<GetByIdCategoryDto>(category);
         return Ok(categoryDto);
     }
     [HttpPost]
@@ -57,8 +57,6 @@ public class CategoriesController : ControllerBase
     public IActionResult UpdateCategory(UpdateCategoryDto categoryDto)
     {
         Category category = mapper.Map<Category>(categoryDto);
-        category.CategoryId = categoryDto.CategoryId;
-        category.CategoryName = categoryDto.CategoryName;
         context.Categories.Update(category);
         context.SaveChanges();
         return Ok("Kategori Güncellendi");
