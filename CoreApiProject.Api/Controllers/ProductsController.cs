@@ -4,10 +4,11 @@ using CoreApiProject.Api.Dtos.ProductDtos;
 using CoreApiProject.Api.Entities;
 using FluentValidation;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace CoreApiProject.Api.Controllers;
 
-[Route("api/[controller]")]
+[Route("api/products")]
 [ApiController]
 public class ProductsController : ControllerBase
 {
@@ -30,8 +31,16 @@ public class ProductsController : ControllerBase
         return Ok(productsDto);
     }
 
-    [HttpGet("GetProduct")]
-    public IActionResult GetProduct(int id)
+    [HttpGet("ProductsWithCategory")]
+    public IActionResult GetProductsWithCategory()
+    {
+        List<Product> products = context.Products.Include(p => p.Category).ToList();
+        List<ResultProductWithCategoryDto> productsDto = mapper.Map<List<ResultProductWithCategoryDto>>(products);
+        return Ok(productsDto);
+    }
+
+    [HttpGet("{id:int}")]
+    public IActionResult GetProduct([FromRoute(Name = "id")]int id)
     {
         var product = context.Products.Find(id);
         GetByIdProductDto productDto = mapper.Map<GetByIdProductDto>(product);
@@ -39,7 +48,7 @@ public class ProductsController : ControllerBase
     }
 
     [HttpPost]
-    public IActionResult CreateProduct(CreateProductDto productDto)
+    public IActionResult CreateProduct([FromBody] CreateProductDto productDto)
     {
         var validationResult = createProductValidator.Validate(productDto);
         if (!validationResult.IsValid)
@@ -50,8 +59,8 @@ public class ProductsController : ControllerBase
         return Ok(new {message = "Ürün Başarıyla Eklendi", data = product});
     }
 
-    [HttpDelete]
-    public IActionResult RemoveProduct(int id)
+    [HttpDelete("{id:int}")]
+    public IActionResult RemoveProduct([FromRoute(Name = "id")] int id)
     {
         var product = context.Products.Find(id);
         if (product != null)
@@ -65,7 +74,7 @@ public class ProductsController : ControllerBase
     }
 
     [HttpPut]
-    public IActionResult UpdateProduct(UpdateProductDto productDto)
+    public IActionResult UpdateProduct([FromBody] UpdateProductDto productDto)
     {
         Product product = mapper.Map<Product>(productDto);
         context.Products.Update(product);
