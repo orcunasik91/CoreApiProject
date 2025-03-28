@@ -1,0 +1,15 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="wwwroot\webUI\assets\.DS_Store" />
+    <None Include="wwwroot\webUI\assets\img\.DS_Store" />
+    <None Include="wwwroot\webUI\assets\vendor\.DS_Store" />
+  </ItemGroup>
+
+</Project>
