@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 
-namespace CoreApiProject.UI.ViewComponents;
-public class FeatureSectionComponentPartial : ViewComponent
+namespace CoreApiProject.UI.ViewComponents.MainLayout;
+public class AboutSectionViewComponent : ViewComponent
 {
     public IViewComponentResult Invoke()
     {

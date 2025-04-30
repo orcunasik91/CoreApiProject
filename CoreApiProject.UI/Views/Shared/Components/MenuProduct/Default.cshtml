@@ -1,0 +1,35 @@
+﻿@model List<ResultProductsWithCategoryDto>
+<div class="tab-content" data-aos="fade-up" data-aos-delay="200">
+    @{
+        var groupedProducts = Model
+            .GroupBy(p => p.CategoryName)
+            .ToList();
+    }
+    @for (int i = 0; i < groupedProducts.Count; i++)
+    {
+        var group = groupedProducts[i];
+        string isActive = i == 0 ? "tab-pane fade active show" : "tab-pane fade";
+        string targetId = "menu-" + group.Key.ToLower().Replace(" ", "");
+        <div class="@isActive" id="@targetId">
+            <div class="tab-header text-center">
+                <p>Menü</p>
+                <h3>@group.Key</h3>
+            </div>
+            <div class="row gy-5">
+                @foreach (var product in group)
+                {
+                    <div class="col-lg-4 menu-item">
+                        <a href="#" class="glightbox"><img src="@product.ImageUrl" class="menu-img img-fluid" alt=""></a>
+                        <h4>@product.ProductName</h4>
+                        <p class="ingredients">
+                            @product.Description
+                        </p>
+                        <p class="price">
+                            @product.Price₺
+                        </p>
+                    </div>
+                }
+            </div>
+        </div>
+    }
+</div>

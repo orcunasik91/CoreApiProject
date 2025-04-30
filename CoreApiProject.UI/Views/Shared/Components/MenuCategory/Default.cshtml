@@ -1,0 +1,15 @@
+﻿@model List<ResultCategoryDto>
+<ul class="nav nav-tabs d-flex justify-content-center" data-aos="fade-up" data-aos-delay="100">
+    @for (int i = 0; i < Model.Count; i++)
+    {
+        var category = Model[i];
+        var isActive = i == 0 ? "nav-link active show" : "nav-link";
+        var targetId = $"#menu-{category.CategoryName.ToLower().Replace(" ", "")}";
+
+        <li class="nav-item">
+            <a class="@isActive" data-bs-toggle="tab" data-bs-target="@targetId">
+                <h4>@category.CategoryName</h4>
+            </a>
+        </li>
+    }
+</ul>
